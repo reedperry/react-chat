@@ -8,25 +8,46 @@ const socket = new WebSocket(url);
 
 function App() {
   const { messages, send } = useSocket(socket);
+  const [sentMessages, setSentMessages] = useState([]);
+
+  function sendMessage(message) {
+    send(message);
+    setSentMessages([
+      ...sentMessages,
+      { content: message, id: Math.round(Math.random() * 100000) }
+    ]);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <div className="messages">
-        <SentMessages />
+        <SentMessages messages={sentMessages} />
         <ReceivedMessages messages={messages} />
-        <MessageEditor onSendMessage={send} />
+        <MessageEditor onSendMessage={sendMessage} />
       </div>
     </div>
   );
 }
 
-function SentMessages() {
+function SentMessages(props) {
   return (
     <div
-      style={{ display: 'flex', alignItems: 'end', flexDirection: 'column' }}>
-      Sent messages...
+      style={{ float: 'right', display: 'flex', alignItems: 'end', flexDirection: 'column' }}>
+      {props.messages.map(msg => (
+        <div
+          style={{
+            borderRadius: 5,
+            border: '1px solid #0088cc',
+            margin: 10,
+            padding: 10
+          }}
+          key={msg.id}>
+          {msg.content}
+        </div>
+      ))}
     </div>
   );
 }
@@ -34,7 +55,7 @@ function SentMessages() {
 function ReceivedMessages(props) {
   return (
     <div
-      style={{ display: 'flex', alignItems: 'start', flexDirection: 'column' }}>
+      style={{float: 'left',  display: 'flex', alignItems: 'start', flexDirection: 'column' }}>
       {props.messages.map(msg => (
         <div
           style={{

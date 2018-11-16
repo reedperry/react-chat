@@ -5,8 +5,6 @@ const wss = new WebSocket.Server({ port: 8080 }, () => {
 });
 
 wss.broadcast = function broadcast(data) {
-  console.log('There are ', wss.clients.size, 'clients');
-
   wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(data);
@@ -15,9 +13,10 @@ wss.broadcast = function broadcast(data) {
 };
 
 wss.on('connection', ws => {
+  console.log('There are ', wss.clients.size, 'clients');
+
   ws.on('message', msg => {
     console.log('[server] received: %s', msg);
-    console.log('[server] from client ', ws);
 
     wss.clients.forEach(client => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
