@@ -16,6 +16,7 @@ export default function useSocket(socket) {
     };
 
     function onOpen(event) {
+      console.log('You connected!');
     }
 
     socket.addEventListener('open', onOpen);
@@ -24,7 +25,7 @@ export default function useSocket(socket) {
       socket.removeEventListener('open', onOpen);
       socket.removeEventListener('message', onMessage);
     };
-  });
+  }, [messages]);
 
   return { messages, send };
 }
