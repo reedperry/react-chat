@@ -6,9 +6,11 @@ export default function useSocket(socket) {
   useEffect(
     () => {
       const onMessage = event => {
+        const data = JSON.parse(event.data);
+        console.log(event);
         setMessages([
           ...messages,
-          { content: event.data, id: event.timeStamp }
+          { content: data.content, sender: data.senderId, id: event.timeStamp }
         ]);
       };
 

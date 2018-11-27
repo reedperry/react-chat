@@ -1,19 +1,12 @@
 const WebSocket = require('ws');
 const url = require('url');
 
+const SERVER_ID = -1;
 const validTokens = ['123a', '456b', '789c'];
 
 const wss = new WebSocket.Server({ port: 8080 }, () => {
   console.log('Server started.');
 });
-
-wss.broadcast = function broadcast(data) {
-  wss.clients.forEach(client => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(data);
-    }
-  });
-};
 
 wss.on('connection', (ws, req) => {
   const {
@@ -44,11 +37,11 @@ wss.on('connection', (ws, req) => {
     console.log('[server] received: %s', msg, 'from client', ws.id);
 
     wss.clients.forEach(client => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(msg);
+      if (/*client !== ws && */client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({ content: msg, senderId: ws.id }));
       }
     });
   });
 
-  ws.send('Welcome to react-chat!');
+  ws.send(JSON.stringify({ content: 'Welcome to react-chat!', senderId: SERVER_ID }));
 });
