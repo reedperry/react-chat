@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Connector from './Connector';
 import ReceivedMessage from './ReceivedMessage';
 import SentMessage from './SentMessage';
 import useSocket from './useSocket';
@@ -53,40 +54,6 @@ function MessageEditor(props) {
         onClick={() => submitMessage(message, props.onSendMessage, setMessage)}>
         Send
       </button>
-    </div>
-  );
-}
-
-function Connector(props) {
-  const [token, setToken] = useState('');
-  const [username, setUsername] = useState('');
-  return (
-    <div>
-      <form>
-        <div>
-          <label htmlFor="token">Token: </label>
-          <input
-            name="token"
-            required
-            value={token}
-            onChange={e => setToken(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="username">Username: </label>
-          <input
-            name="username"
-            required
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-        </div>
-        <button
-          type="button"
-          onClick={() => props.onSubmit({ token, username })}>
-          Connect
-        </button>
-      </form>
     </div>
   );
 }
