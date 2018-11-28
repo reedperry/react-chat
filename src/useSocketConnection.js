@@ -1,16 +1,20 @@
 import { useState } from 'react';
 
-export default function useSocketConnection(token) {
+// A loginInfo object contains a token: string and username: string
+export default function useSocketConnection(loginInfo) {
   const [socket, setSocket] = useState(null);
   const [socketError, setSocketError] = useState(false);
 
-  if (!token) {
+  if (!loginInfo || !loginInfo.token) {
     return {
       socket: null,
       socketError: null
     };
   } else if (!socket) {
-    const conn = connect(token);
+    const conn = connect(
+      loginInfo.token,
+      loginInfo.username || 'Anonymous User'
+    );
     const poll = setInterval(() => {
       if (conn.readyState === WebSocket.OPEN) {
         setSocket(conn);
@@ -29,8 +33,8 @@ export default function useSocketConnection(token) {
   };
 }
 
-function connect(token) {
-  const url = 'ws://localhost:8080?token=' + token;
+function connect(token, username) {
+  const url = `ws://localhost:8080?token=${token}&username=${username}`;
   const socket = new WebSocket(url);
   return socket;
 }

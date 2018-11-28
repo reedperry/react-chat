@@ -23,9 +23,9 @@
 }
 
 .messages {
-  min-height: 80vh;
+  min-height: 100vh;
   background-color: #282c34;
-  color: white;
+  color: #eee;
 }
 
 @keyframes App-logo-spin {

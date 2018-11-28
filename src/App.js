@@ -6,13 +6,13 @@ import useSocketConnection from './useSocketConnection';
 import './App.css';
 
 function App() {
-  const [token, setToken] = useState(null);
-  const { socket, socketError } = useSocketConnection(token);
+  const [loginInfo, setLoginInfo] = useState(null);
+  const { socket, socketError } = useSocketConnection(loginInfo);
 
   return (
     <div className="App">
-      {!socket && <Connector onSubmit={setToken} />}
-      {socket && <Chat socket={socket} token={token} />}
+      {!socket && <Connector onSubmit={setLoginInfo} />}
+      {socket && <Chat socket={socket} token={loginInfo.token} />}
       {socketError && <h3>Failed to connect!</h3>}
     </div>
   );
@@ -28,10 +28,10 @@ function Chat(props) {
   return (
     <div className="messages">
       {messages.map(message => {
-        if (message.sender === props.token) {
-          return <SentMessage message={message} key={message.id} />
+        if (message.sender.id === props.token) {
+          return <SentMessage message={message} key={message.id} />;
         } else {
-          return <ReceivedMessage message={message} key={message.id} />
+          return <ReceivedMessage message={message} key={message.id} />;
         }
       })}
       <MessageEditor onSendMessage={sendMessage} />
@@ -59,17 +59,34 @@ function MessageEditor(props) {
 
 function Connector(props) {
   const [token, setToken] = useState('');
+  const [username, setUsername] = useState('');
   return (
     <div>
-      <label htmlFor="token">Token</label>
-      <input
-        name="token"
-        value={token}
-        onChange={e => setToken(e.target.value)}
-      />
-      <button type="button" onClick={() => props.onSubmit(token)}>
-        Connect
-      </button>
+      <form>
+        <div>
+          <label htmlFor="token">Token: </label>
+          <input
+            name="token"
+            required
+            value={token}
+            onChange={e => setToken(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="username">Username: </label>
+          <input
+            name="username"
+            required
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={() => props.onSubmit({ token, username })}>
+          Connect
+        </button>
+      </form>
     </div>
   );
 }

@@ -7,10 +7,9 @@ export default function useSocket(socket) {
     () => {
       const onMessage = event => {
         const data = JSON.parse(event.data);
-        console.log(event);
         setMessages([
           ...messages,
-          { content: data.content, sender: data.senderId, id: event.timeStamp }
+          { content: data.content, sender: data.sender, id: event.timeStamp }
         ]);
       };
 
