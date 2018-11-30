@@ -1,4 +1,6 @@
 import React from 'react';
+import { SENT } from './App';
+import Message from './Message';
 
 export default function SentMessage(props) {
   return (
@@ -9,15 +11,7 @@ export default function SentMessage(props) {
         alignItems: 'end',
         flexDirection: 'column'
       }}>
-      <div
-        style={{
-          borderRadius: 5,
-          border: '1px solid #0088cc',
-          margin: 5,
-          padding: 10
-        }}>
-        {props.message.content}
-      </div>
+      <Message message={props.message} type={SENT} />
     </div>
   );
 }

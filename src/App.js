@@ -6,6 +6,9 @@ import useSocket from './useSocket';
 import useSocketConnection from './useSocketConnection';
 import './App.css';
 
+export const SENT = 0;
+export const RECEIVED = 1;
+
 function App() {
   const [loginInfo, setLoginInfo] = useState(null);
   const { socket, socketError } = useSocketConnection(loginInfo);

@@ -1,4 +1,6 @@
 import React from 'react';
+import { RECEIVED } from './App';
+import Message from './Message';
 
 export default function ReceivedMessages(props) {
   return (
@@ -9,15 +11,7 @@ export default function ReceivedMessages(props) {
         alignItems: 'start',
         flexDirection: 'column'
       }}>
-        <div
-          style={{
-            borderRadius: 5,
-            border: '1px solid lightgreen',
-            margin: 5,
-            padding: 10
-          }}>
-          {props.message.content}
-        </div>
+      <Message message={props.message} type={RECEIVED} />
     </div>
   );
 }
