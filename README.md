@@ -1,3 +1,23 @@
+This is currently a very basic (and very ugly) web chat application.
+It was started as an experiment try out and learn more about React Hooks while using WebSockets.
+
+After installing node and yarn, run `yarn intall` from the project directory to install dependencies.
+
+To start the server from the project directory, run:
+
+### `node src/server.js`
+
+To start the front end from the project directory, run:
+
+### `yarn start`
+
+You can then open up one or more browser windows/tabs at [http://localhost:3000](http://localhost:3000).
+
+Sign in by providing one of `123a`, `456b`, or `789c` as a token, and some username.
+
+--------------------------------------------------------------------------------
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
